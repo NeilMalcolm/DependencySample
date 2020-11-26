@@ -39,9 +39,10 @@ namespace DependencyHelper.Services
         {
             _dependencyContainer = new Container();
             RegisterNativeDependencies();
-            Register<IColorService, ColorService>(true);
-            Register<IViewModelLocator, ViewModelLocator>(true);
-            Register<INavigationService, NavigationService>(true);
+            Register<IDependencyContainer>(this);
+            Register<IColorService, ColorService>();
+            Register<IViewModelLocator, ViewModelLocator>();
+            Register<INavigationService, NavigationService>();
             RegisterViewModels();
         }
 
@@ -68,7 +69,7 @@ namespace DependencyHelper.Services
 
         protected void Register<T>(T instance) where T : class
         {
-            _dependencyContainer.Register(() => instance);
+            _dependencyContainer.Register(() => instance, Lifestyle.Singleton);
         }
 
         /// <summary>

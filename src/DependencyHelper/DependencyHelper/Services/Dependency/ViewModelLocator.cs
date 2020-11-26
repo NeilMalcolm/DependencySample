@@ -7,6 +7,13 @@ namespace DependencyHelper.Services.Dependency
 {
     public class ViewModelLocator : IViewModelLocator
     {
+        private readonly IDependencyContainer dependencyContainer;
+
+        public ViewModelLocator(IDependencyContainer dependencyContainer)
+        {
+            this.dependencyContainer = dependencyContainer;
+        }
+
         /// <summary>
         /// Gets the ViewModel for the <c>page</c> of type <c>T</c>.
         /// </summary>
@@ -16,9 +23,8 @@ namespace DependencyHelper.Services.Dependency
         public BaseViewModel Get<T>() where T : Page
         {
             var viewModelType = GetViewModelTypeForPage<T>();
-            return (BaseViewModel)App.DependencyService.Get(viewModelType);
+            return (BaseViewModel)dependencyContainer.Get(viewModelType);
         }
-
 
         public Type GetViewModelTypeForPage<T>() where T : Page
         {

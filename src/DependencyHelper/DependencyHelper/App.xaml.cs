@@ -1,7 +1,5 @@
 ﻿using DependencyHelper.Pages;
 using DependencyHelper.Services;
-using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace DependencyHelper
