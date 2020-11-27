@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DependencyHelper.ViewModels;
+using System;
 
 namespace DependencyHelper.Attributes
 {
@@ -9,6 +10,11 @@ namespace DependencyHelper.Attributes
 
         public ViewModelAttribute(Type type)
         {
+            if (type.BaseType != typeof(BaseViewModel))
+            {
+                throw new Exception($"ViewModel must have BaseViewModel as a base class. Provided type {type.Name} does not inherit from BaseViewModel.");
+            }
+
             ViewModelType = type;
         }
     }

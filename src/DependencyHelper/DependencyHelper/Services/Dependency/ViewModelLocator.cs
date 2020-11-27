@@ -8,10 +8,13 @@ namespace DependencyHelper.Services.Dependency
     public class ViewModelLocator : IViewModelLocator
     {
         private readonly IDependencyContainer dependencyContainer;
+        private readonly IAttributeService attributeService;
 
-        public ViewModelLocator(IDependencyContainer dependencyContainer)
+        public ViewModelLocator(IDependencyContainer dependencyContainer,
+            IAttributeService attributeService)
         {
             this.dependencyContainer = dependencyContainer;
+            this.attributeService = attributeService;
         }
 
         /// <summary>
@@ -23,12 +26,18 @@ namespace DependencyHelper.Services.Dependency
         public BaseViewModel Get<T>() where T : Page
         {
             var viewModelType = GetViewModelTypeForPage<T>();
+
+            if (viewModelType is null)
+            {
+                throw new Exception($"No ViewModel found for page {typeof(T).Name}");
+            }
+
             return (BaseViewModel)dependencyContainer.Get(viewModelType);
         }
 
         public Type GetViewModelTypeForPage<T>() where T : Page
         {
-            return AttributeHelper.GetAttribute<ViewModelAttribute, T>()?.ViewModelType;
+            return attributeService.GetAttribute<ViewModelAttribute, T>()?.ViewModelType;
         }
     }
 }

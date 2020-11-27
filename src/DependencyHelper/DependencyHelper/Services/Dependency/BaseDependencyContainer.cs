@@ -41,6 +41,7 @@ namespace DependencyHelper.Services
             RegisterNativeDependencies();
             Register<IDependencyContainer>(this);
             Register<IColorService, ColorService>();
+            Register<IAttributeService, AttributeService>();
             Register<IViewModelLocator, ViewModelLocator>();
             Register<INavigationService, NavigationService>();
             RegisterViewModels();
